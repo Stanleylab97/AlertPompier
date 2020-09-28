@@ -29,7 +29,7 @@ class _StartState extends State<Start> {
   @override
   void initState() {
     super.initState();
-    try {
+   /*  try {
         _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
           setState(() {
           _currentUser = account;
@@ -39,7 +39,7 @@ class _StartState extends State<Start> {
           }
       });
         _googleSignIn.signInSilently(); 
-    } catch (e) {}
+    } catch (e) {} */
   }
 
   Future<void> _handleGetContact() async {

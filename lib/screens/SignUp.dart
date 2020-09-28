@@ -36,17 +36,16 @@ class _SignUpState extends State<SignUp> {
   signUp() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-       setState(() {
+      setState(() {
         circular = true;
       });
-      
+
       Map<String, String> data = {
         "email": _email.text.trim(),
         "tel": _tel.text.trim(),
         "method": "local",
         "password": _password.text.trim()
       };
-      BuildContext context;
 
       try {
         DataConnectionStatus status = await isConnected();
@@ -66,10 +65,8 @@ class _SignUpState extends State<SignUp> {
                 ),
                 (route) => false);
           } else {
-            
             Flushbar(
-              message:
-                  "Une erreur s'est produite",
+              message: "Une erreur s'est produite",
               icon: Icon(
                 Icons.info_outline,
                 size: 28.0,
@@ -130,7 +127,16 @@ class _SignUpState extends State<SignUp> {
           );
         }
       } catch (e) {
-        showError(e.toString());
+        Flushbar(
+          message: e.toString(),
+          icon: Icon(
+            Icons.info_outline,
+            size: 28.0,
+            color: Colors.blue[300],
+          ),
+          duration: Duration(seconds: 3),
+          leftBarIndicatorColor: Colors.blue[300],
+        )..show(context);
       }
     }
   }

@@ -49,7 +49,6 @@ class NetworkHandler {
       body: json.encode(body),
       headers: {"Content-type": "application/json"},
     );
-
     return response;
   }
 

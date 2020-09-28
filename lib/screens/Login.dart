@@ -40,10 +40,11 @@ class _LoginState extends State<Login> {
       DataConnectionStatus status = await isConnected();
       if (status == DataConnectionStatus.connected) {
         var response = await networkHandler.post("/users/login", data);
+        
         if (response.statusCode == 200 || response.statusCode == 201) {
-          Map<String, dynamic> output = json.decode(response.body);
-          print(output['token']);
-          await storage.write(key: "token", value: output["token"]);
+           Map<String, dynamic> output = json.decode(response.body);
+
+          await storage.write(key: "token", value: output["token"]); 
 
           setState(() {
             validate = true;
@@ -57,14 +58,17 @@ class _LoginState extends State<Login> {
               ),
               (route) => false);
         } else {
-          String output = json.decode(response.body);
+          Map<String, String> output = json.decode(response.body);
           setState(() {
             validate = false;
-            errorText = output;
+            //errorText = output['status'];
             circular = false;
           });
         }
       } else {
+        setState(() {
+          circular = false;
+        });
         Flushbar(
             title: "Hey Ninja",
             message:
