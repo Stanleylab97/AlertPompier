@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:alert/config/NetworkHandler.dart';
 import 'package:alert/config/palette.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
@@ -63,10 +64,55 @@ class _LoginState extends State<Login> {
             circular = false;
           });
         }
-      }else{
-        Scaffold.of(context).showSnackBar(
-              SnackBar(content: Text("Vérifiez votre connexion internet")));
-      }               
+      } else {
+        Flushbar(
+            title: "Hey Ninja",
+            message:
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+            flushbarPosition: FlushbarPosition.TOP,
+            flushbarStyle: FlushbarStyle.FLOATING,
+            reverseAnimationCurve: Curves.decelerate,
+            forwardAnimationCurve: Curves.elasticOut,
+            backgroundColor: Colors.red,
+            boxShadows: [
+              BoxShadow(
+                  color: Colors.blue[800],
+                  offset: Offset(0.0, 2.0),
+                  blurRadius: 3.0)
+            ],
+            backgroundGradient:
+                LinearGradient(colors: [Colors.blueGrey, Colors.black]),
+            isDismissible: false,
+            duration: Duration(seconds: 4),
+            icon: Icon(
+              Icons.info_outline,
+              color: Colors.greenAccent,
+            ),
+            mainButton: FlatButton(
+              onPressed: () {},
+              child: Text(
+                "BAD",
+                style: TextStyle(color: Colors.amber),
+              ),
+            ),
+            showProgressIndicator: true,
+            progressIndicatorBackgroundColor: Colors.blueGrey,
+            titleText: Text(
+              "Connexion impossible",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                  color: Colors.yellow[600],
+                  fontFamily: "ShadowsIntoLightTwo"),
+            ),
+            messageText: Text(
+              "Vérifiez votre connexion internet!",
+              style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.green,
+                  fontFamily: "ShadowsIntoLightTwo"),
+            ));
+      }
     }
   }
 
@@ -212,6 +258,5 @@ class _LoginState extends State<Login> {
   isConnected() async {
     return await DataConnectionChecker().connectionStatus;
     // actively listen for status update
-
   }
 }

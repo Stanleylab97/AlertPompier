@@ -9,12 +9,12 @@ import 'dart:async';
 import 'dart:convert' show json;
 import "package:http/http.dart" as http;
 
-/* GoogleSignIn _googleSignIn = GoogleSignIn(
+ GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: <String>[
     'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
+    'https://www.googleapis.com/auth/contacts.userinfo',
   ],
-); */
+); 
 
 class Start extends StatefulWidget {
   @override
@@ -30,7 +30,7 @@ class _StartState extends State<Start> {
   void initState() {
     super.initState();
     try {
-      /*  _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
+        _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
           setState(() {
           _currentUser = account;
           });
@@ -38,7 +38,7 @@ class _StartState extends State<Start> {
             _handleGetContact();
           }
       });
-        _googleSignIn.signInSilently(); */
+        _googleSignIn.signInSilently(); 
     } catch (e) {}
   }
 
@@ -48,7 +48,7 @@ class _StartState extends State<Start> {
     });
     final http.Response response = await http.get(
       'https://people.googleapis.com/v1/people/me/connections'
-      '?requestMask.includeField=person.names',
+      '?requestMask.includeField=person.emails',
       headers: await _currentUser.authHeaders,
     );
     if (response.statusCode != 200) {
@@ -90,7 +90,7 @@ class _StartState extends State<Start> {
 
   Future<void> _handleSignIn() async {
     try {
-      //await _googleSignIn.signIn();
+      await _googleSignIn.signIn();
     } catch (error) {
       print(error);
     }
@@ -181,14 +181,14 @@ class _StartState extends State<Start> {
               ],
             ),
             SizedBox(height: 25.0),
-            SignInButton(
+            /* SignInButton(
               Buttons.Google,
               text: "Se connecter avec Google",
               onPressed: () {
                 _handleSignIn();
               },
               elevation: 8.0,
-            )
+            ) */
           ],
         ),
       ),

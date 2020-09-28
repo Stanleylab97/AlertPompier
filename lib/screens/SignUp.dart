@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 import 'dart:convert';
 import 'BottomNavScreen.dart';
+import 'package:flushbar/flushbar.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -35,6 +36,10 @@ class _SignUpState extends State<SignUp> {
   signUp() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
+       setState(() {
+        circular = true;
+      });
+      
       Map<String, String> data = {
         "email": _email.text.trim(),
         "tel": _tel.text.trim(),
@@ -61,12 +66,68 @@ class _SignUpState extends State<SignUp> {
                 ),
                 (route) => false);
           } else {
-            Scaffold.of(context).showSnackBar(
-                SnackBar(content: Text("Une erreur s'est produite")));
+            
+            Flushbar(
+              message:
+                  "Une erreur s'est produite",
+              icon: Icon(
+                Icons.info_outline,
+                size: 28.0,
+                color: Colors.blue[300],
+              ),
+              duration: Duration(seconds: 3),
+              leftBarIndicatorColor: Colors.blue[300],
+            )..show(context);
           }
         } else {
-          Scaffold.of(context).showSnackBar(
-              SnackBar(content: Text("Vérifiez votre connexion internet")));
+          Flushbar(
+            title: "Hey Ninja",
+            message:
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+            flushbarPosition: FlushbarPosition.TOP,
+            flushbarStyle: FlushbarStyle.FLOATING,
+            reverseAnimationCurve: Curves.decelerate,
+            forwardAnimationCurve: Curves.elasticOut,
+            backgroundColor: Colors.red,
+            boxShadows: [
+              BoxShadow(
+                  color: Colors.blue[800],
+                  offset: Offset(0.0, 2.0),
+                  blurRadius: 3.0)
+            ],
+            backgroundGradient:
+                LinearGradient(colors: [Colors.blueGrey, Colors.black]),
+            isDismissible: false,
+            duration: Duration(seconds: 4),
+            icon: Icon(
+              Icons.info_outline,
+              color: Colors.greenAccent,
+            ),
+            mainButton: FlatButton(
+              onPressed: () {},
+              child: Text(
+                "BAD",
+                style: TextStyle(color: Colors.amber),
+              ),
+            ),
+            showProgressIndicator: true,
+            progressIndicatorBackgroundColor: Colors.blueGrey,
+            titleText: Text(
+              "Connexion impossible",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                  color: Colors.yellow[600],
+                  fontFamily: "ShadowsIntoLightTwo"),
+            ),
+            messageText: Text(
+              "Vérifiez votre connexion internet!",
+              style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.green,
+                  fontFamily: "ShadowsIntoLightTwo"),
+            ),
+          );
         }
       } catch (e) {
         showError(e.toString());
